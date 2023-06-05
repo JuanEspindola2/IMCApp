@@ -10,30 +10,25 @@ import com.juancho.aplicacion.R
 import java.text.DecimalFormat
 
 class ImcCalculatorActivity : AppCompatActivity() {
-
-    private var isMaleSelected: Boolean = true
-    private var isFemaleSelected: Boolean = false
-
+    private var isMaleSelected:Boolean = true
+    private var isFemaleSelected:Boolean = false
     private lateinit var viewMale: CardView
     private lateinit var viewFemale: CardView
-    private lateinit var tvHeight:TextView
-    private lateinit var rsHeight:RangeSlider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_imc_calculator)
-        initComponets()
+        initComponent()
         initListeners()
         initUI()
     }
 
 
 
-    private fun initComponets() {
+    private fun initComponent() {
         viewFemale = findViewById(R.id.viewFemale)
         viewMale = findViewById(R.id.viewMale)
-        tvHeight = findViewById(R.id.tvHeight)
-        rsHeight = findViewById(R.id.rsHeight)
+
     }
 
     private fun initListeners() {
@@ -45,11 +40,6 @@ class ImcCalculatorActivity : AppCompatActivity() {
             changeGender()
             setGenderColor()
         }
-        rsHeight.addOnChangeListener { _, value, _ ->
-            val df = DecimalFormat("#.##")
-            val result = df.format(value)
-            tvHeight.text = "$result cm"
-        }
     }
 
     private fun changeGender(){
@@ -57,21 +47,21 @@ class ImcCalculatorActivity : AppCompatActivity() {
         isFemaleSelected = !isFemaleSelected
     }
 
-    private fun setGenderColor() {
+    private fun setGenderColor(){
+
         viewMale.setCardBackgroundColor(getBackgroundColor(isMaleSelected))
         viewFemale.setCardBackgroundColor(getBackgroundColor(isFemaleSelected))
     }
-
-    private fun getBackgroundColor(isSelectedComponent: Boolean): Int {
-
-        val colorReference = if (isSelectedComponent) {
+    private fun getBackgroundColor(isSelectedComponent:Boolean): Int {
+        val colorReference = if (isSelectedComponent){
             R.color.background_component_selected
-        } else {
+        }else{
             R.color.background_component
         }
 
-        return ContextCompat.getColor(this, colorReference)
+        return ContextCompat.getColor(this,colorReference)
     }
+
     private fun initUI() {
         setGenderColor()
     }
